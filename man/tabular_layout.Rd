@@ -14,9 +14,6 @@ A data frame with 4 rows and 4 columns:
   \item{V4}{Layout elements}
 }
 }
-\source{
-<https://coolors.co/>
-}
 \usage{
 tabular_layout
 }

@@ -12,5 +12,17 @@
 #'   \item{V3}{Layout elements}
 #'   \item{V4}{Layout elements}
 #' }
-#' @source <https://coolors.co/>
 "tabular_layout"
+
+#' Tabular Layout for Tile Map
+#'
+#' A data set intended to illustrate how to join generated tile map data to
+#' a corresponding data set with variables of interest.
+#'
+#' @format ## `sales_data`
+#' A data frame with 7 rows and 2 columns:
+#' \describe{
+#'   \item{id}{Unique identifiers for the tile shapes}
+#'   \item{sales}{Sales figures for each tile shape}
+#' }
+"sales_data"

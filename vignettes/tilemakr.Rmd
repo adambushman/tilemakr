@@ -1,0 +1,182 @@
+---
+title: "{tilemakr} vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{tilemakr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+This package creates custom tile map data for...anything. Turn a matrix layout into coordinates that feed {ggplot2} layers.
+
+If you've ever wanted to recreate the US tile map design with your own layout, this package is for you.
+
+# Getting Started
+
+To get started with the package, install using `remotes`:
+
+```{r eval=FALSE}
+install.packages("remotes")
+
+remotes::install_github(
+  "adambushman/tilemakr", 
+  dependencies = TRUE, 
+  build_vignettes = TRUE
+)
+```
+
+Once installed, load the package using the `library` command below or reference individual components using the `::` framework:
+
+```{r}
+# Load the entire library into the session
+
+library("tilemakr")
+```
+
+You'll find helpful functions for turning custom layouts into plotable data frames in {ggplot2}.
+
+# About Tile Maps
+
+Tile maps are an incredible alternative to traditional, geographically true shape file maps. When geographic shape, scale, and relationships aren't the focus of a visualization, tile maps step in to let the true focus shine.
+
+By standardizing size and shape, they allow the real variables of interest to be the star of the show. The most common versions are square and hexagon tile maps of the United States:
+
+![Square Tile Map](https://images.presentationgo.com/2020/09/Square-Tile-Grid-Map-USA-PowerPoint.png) ![Hexagon Tile Map](https://images.presentationgo.com/2020/09/Hex-Tile-Grid-Map-USA-PowerPoint.png)
+
+Outside of this popular example (for which there are existing resources for reproduction), tools for applying the technique to any custom layout appears to be missing; until now.
+
+# Creating a Tile Map
+
+Creating a tile map for a custom layout starts with a grid design in matrix form. Look at this simple example:
+
+```{r}
+layout = matrix(
+  data = c(
+    "A", 0, 0, "B", 
+    0, "C", "D", "E", 
+    0, 0, "F", 0, 
+    0, "G", 0, 0
+  ), 
+  byrow = TRUE, 
+  nrow = 4, 
+  ncol = 4
+)
+```
+
+What we have here is a 4x4 grid. Our design intends to have tiles named "A", "B", "C", etc., in their respective positions, with zero (0) marking empty regions in our layout. You'll also notice each position intended for a tile has a unique name or ID.
+
+Generating the data necessary for this layout is as simple as calling the `make_tiles()` function and passing it the *layout* variable. It will return us a data frame we can use in conjunction with {ggplot2}.
+
+We need only pass the layout and specify the type of tile ("square" or "hexagon") we want to draw:
+
+```{r warning=FALSE}
+layout_data = make_tiles(layout, "square")
+
+str(layout_data)
+```
+
+The data frame has (x,y) coordinates for drawing the polygon. {ggplot2} will use the *id* field to properly group the coordinates to their respective shape groups. We also get (center_x,center_y) coordinates useful for plotting the tile names.
+
+With our dataset ready to go, we call {ggplot2} to visualize our tile map layout:
+
+```{r warning=FALSE}
+
+# Install {ggplot2} if needed
+# install.packages('ggplot2')
+
+ggplot2::ggplot() +
+  ggplot2::geom_polygon(
+    ggplot2::aes(x, y, group = id, fill = id), 
+    # Our data goes here
+    data = layout_data, 
+    show.legend = FALSE
+  ) +
+  ggplot2::geom_text(
+    ggplot2::aes(center_x, center_y, label = id), 
+    # We remove the extra (x,y) entries to only plot the tile name once each
+    data = unique.data.frame(layout_data[,c("center_x", "center_y", "id")])
+  ) +
+  ggplot2::coord_equal()
+```
+
+We can further style our map with {ggplot2} layers.
+
+# Tile map tricks
+
+### Converting layout data types
+
+When designing custom layouts, you might find it easier to use a tabular data set. Excel, for example, could offer the quick, natural design experience. You could then read the saved .CSV file where after you'll realize you have a data frame, not a matrix.
+
+In such cases, simple exclude your column names (header) and use our conversion function: `tabular_to_matrix()`.
+
+```{r}
+# Currently a data frame
+class(tabular_layout)
+
+# To matrix
+matrix_layout = tabular_to_matrix(tabular_layout)
+
+# Now it's a matrix
+class(matrix_layout)
+```
+
+### Customizing the tile map data
+
+We can do some additional customization of our tile maps, like setting the *size* and *padding* arguments to our preferred specifications:
+
+```{r warning=FALSE}
+layout_data = make_tiles(layout, type = "square", size = 5, padding = 5)
+
+ggplot2::ggplot() +
+  ggplot2::geom_polygon(
+    ggplot2::aes(x, y, group = id, fill = id), 
+    # Our data goes here
+    data = layout_data, 
+    show.legend = FALSE
+  ) +
+  ggplot2::coord_equal()
+```
+
+By setting *size* to 5 and *padding* to 5, we get a layout that's much more spread out.
+
+### Joining with other data
+
+```{r}
+new_data <- 
+  merge(
+    layout_data, 
+    sales_data, 
+    by = "id"
+  )
+
+
+ggplot2::ggplot() +
+  ggplot2::geom_polygon(
+    ggplot2::aes(x, y, group = id, fill = sales), 
+    # Our data goes here
+    data = new_data
+  ) +
+  ggplot2::geom_text(
+    ggplot2::aes(center_x, center_y, label = id), 
+    # We remove the extra (x,y) entries to only plot the tile name once each
+    data = unique.data.frame(new_data[,c("center_x", "center_y", "id")])
+  ) +
+  ggplot2::coord_equal()
+```
+
+# Possibilities
+
+The immediate applications are obvious. We could take any country's states/provinces and quickly generate a custom data set of tiles. More broadly, we could apply the same principles and process to any grid style layout, geographic or not (i.e. convention floor layout of booths).
+
+Below is an example of a production quality visualization which directly implemented the functionality of this package. Review the source code [here](https://github.com/adambushman/tidytuesday-contribs/tree/main/wk27-23_historical-markers).
+
+![Utah state historical markers adjusted for population](https://github.com/adambushman/tidytuesday-contribs/blob/main/wk27-23_historical-markers/utah-historical-markers_final.png?raw=true)
