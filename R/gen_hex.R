@@ -35,11 +35,11 @@ gen_hex <- function(group_id, size, padding, start) {
     ),
     "left" = c(
       (cos(neighbor_r) * size * 2)[2] + start[1] + padding,
-      (sin(neighbor_r) * size * 2)[2] + start[2] + padding
+      (sin(neighbor_r) * size * 2)[2] + start[2]
     ),
     "right" = c(
       (cos(neighbor_r) * size * 2)[5] + start[1] + padding,
-      (sin(neighbor_r) * size * 2)[5] + start[2] + padding
+      (sin(neighbor_r) * size * 2)[5] + start[2]
     ),
     "top-right" = c(
       (cos(neighbor_r) * size * 2)[6] + start[1] + padding,

@@ -56,6 +56,8 @@ Outside of this popular example (for which there are existing resources for repr
 
 # Creating a Tile Map
 
+## Starting With a Layout
+
 Creating a tile map for a custom layout starts with a grid design in matrix form. Look at this simple example:
 
 ```{r}
@@ -74,9 +76,11 @@ layout = matrix(
 
 What we have here is a 4x4 grid. Our design intends to have tiles named "A", "B", "C", etc., in their respective positions, with zero (0) marking empty regions in our layout. You'll also notice each position intended for a tile has a unique name or ID.
 
-Generating the data necessary for this layout is as simple as calling the `make_tiles()` function and passing it the *layout* variable. It will return us a data frame we can use in conjunction with {ggplot2}.
+## Layout to Data Points
 
-We need only pass the layout and specify the type of tile ("square" or "hexagon") we want to draw:
+Generating the data necessary for this layout is as simple as calling the `make_tiles()` function and passing it the *layout* matrix. It will return us a data frame we can use in conjunction with {ggplot2}.
+
+We need only pass the layout and specify the type of tile we want to draw:
 
 ```{r warning=FALSE}
 layout_data = make_tiles(layout, "square")
@@ -86,7 +90,21 @@ str(layout_data)
 
 The data frame has (x,y) coordinates for drawing the polygon. {ggplot2} will use the *id* field to properly group the coordinates to their respective shape groups. We also get (center_x,center_y) coordinates useful for plotting the tile names.
 
-With our dataset ready to go, we call {ggplot2} to visualize our tile map layout:
+The `make_tiles()` function currently supports 'square' and 'hexagon' tile shapes.
+
+## Visualizing the tile map
+
+With our data set ready to go, we can call `plot_tiles()` to get a quick view of the tile map data. It returns a basic, yet versatile, {ggplot2} object:
+
+```{r warning=FALSE}
+hex_layout <- make_tiles(layout, "hexagon")
+
+p <- plot_tiles(hex_layout)
+
+p + ggplot2::coord_equal()
+```
+
+Alternatively, we can call {ggplot2} geoms in the traditional workflow to plot the tile map data:
 
 ```{r warning=FALSE}
 
