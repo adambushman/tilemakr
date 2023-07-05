@@ -28,22 +28,25 @@ gen_hex <- function(group_id, size, padding, start) {
     center_y = start[2]
   )
 
+  neighbor_points_x = (cos(neighbor_r) * sin(pi / 3) * (size + (padding / 2)) * 2)
+  neighbor_points_y = (sin(neighbor_r) * sin(pi / 3) * (size + (padding / 2)) * 2)
+
   next_data <- list(
     "top-left" = c(
-      (cos(neighbor_r) * size * 2)[1] + start[1] + padding,
-      (sin(neighbor_r) * size * 2)[1] + start[2] + padding
+      neighbor_points_x[1] + start[1],
+      neighbor_points_y[1] + start[2]
     ),
     "left" = c(
-      (cos(neighbor_r) * size * 2)[2] + start[1] + padding,
-      (sin(neighbor_r) * size * 2)[2] + start[2]
+      neighbor_points_x[2] + start[1],
+      neighbor_points_y[2] + start[2]
     ),
     "right" = c(
-      (cos(neighbor_r) * size * 2)[5] + start[1] + padding,
-      (sin(neighbor_r) * size * 2)[5] + start[2]
+      neighbor_points_x[5] + start[1],
+      neighbor_points_y[5] + start[2]
     ),
     "top-right" = c(
-      (cos(neighbor_r) * size * 2)[6] + start[1] + padding,
-      (sin(neighbor_r) * size * 2)[6] + start[2] + padding
+      neighbor_points_x[6] + start[1],
+      neighbor_points_y[6] + start[2]
     )
   )
 
@@ -120,3 +123,4 @@ make_hex_tiles <- function(layout, size, padding) {
 
   return(return_data[return_data$id != "X" & substring(return_data$id, 1, 1) != "0",])
 }
+

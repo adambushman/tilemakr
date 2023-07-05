@@ -168,6 +168,8 @@ By setting *size* to 5 and *padding* to 5, we get a layout that's much more spre
 
 ### Joining with other data
 
+We can also join (merge) the tile map points data with our own data sets. This can be useful for better labeling or, in the case below, we've added a gradient fill to our tiles, scaling with a joined variable *sales*.
+
 ```{r}
 new_data <- 
   merge(
@@ -175,7 +177,6 @@ new_data <-
     sales_data, 
     by = "id"
   )
-
 
 ggplot2::ggplot() +
   ggplot2::geom_polygon(
@@ -189,6 +190,19 @@ ggplot2::ggplot() +
     data = unique.data.frame(new_data[,c("center_x", "center_y", "id")])
   ) +
   ggplot2::coord_equal()
+```
+
+
+# Ready Tile Layouts
+
+This package contains some ready-made matrix layouts. From popular country's states to European nations, the matrix can be loaded in short order using `tile_layouts()`:
+
+```{r}
+euro_layout <- tile_layouts[["European Countries"]]
+
+euro_data <- make_tiles(euro_layout, "hexagon")
+
+plot_tiles(euro_data) + ggplot2::coord_equal()
 ```
 
 # Possibilities

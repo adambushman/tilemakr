@@ -32,7 +32,7 @@
 #' Pre-generated layout matrices for quick tile making, then join to and plot
 #' with your own data sets.
 #'
-#' @format ## `geo_tile_data`
+#' @format ## `tile_layouts`
 #' A list of matrices for creating tile maps using any shape supported
 #' by the {tilemaker} functions.
-"geo_tile_data"
+"tile_layouts"
