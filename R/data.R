@@ -1,4 +1,4 @@
-#' Tabular Layout for Tile Map
+#' Tabular layout for tile map
 #'
 #' A grid style layout for creating a tile map. Each column and row describes
 #' elements to great the map. This data type should be converted to a matrix
@@ -14,7 +14,7 @@
 #' }
 "tabular_layout"
 
-#' Tabular Layout for Tile Map
+#' Tabular layout for tile map
 #'
 #' A data set intended to illustrate how to join generated tile map data to
 #' a corresponding data set with variables of interest.
@@ -26,3 +26,13 @@
 #'   \item{sales}{Sales figures for each tile shape}
 #' }
 "sales_data"
+
+#' List of matrices to create tile maps
+#'
+#' Pre-generated layout matrices for quick tile making, then join to and plot
+#' with your own data sets.
+#'
+#' @format ## `geo_tile_data`
+#' A list of matrices for creating tile maps using any shape supported
+#' by the {tilemaker} functions.
+"geo_tile_data"

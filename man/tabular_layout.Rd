@@ -3,7 +3,7 @@
 \docType{data}
 \name{tabular_layout}
 \alias{tabular_layout}
-\title{Tabular Layout for Tile Map}
+\title{Tabular layout for tile map}
 \format{
 ## `tabular_layout`
 A data frame with 4 rows and 4 columns:

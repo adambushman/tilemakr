@@ -1,9 +1,9 @@
 #' Make Tiles
 #'
-#' `make_tiles()` creates data frame of coordinaates to draw square or hexagon
+#' `make_tiles()` creates data frame of coordinates to draw square or hexagon
 #' tile maps which can be plotted in {ggplot2}.
 #'
-##' @param layout A matrix outlining the desired tile map layout. Each position
+#' @param layout A matrix outlining the desired tile map layout. Each position
 #' intended for a tile should have a unique identifier while all empty positions
 #' should feature a '0'.
 #' @param type A string identifying the shape type to generate; either a 'square'
@@ -63,4 +63,55 @@ make_tiles <- function(
   } else if (type == "hexagon") {
     print("Not yet available")
   }
+}
+
+#' Plot Tiles
+#'
+#' `plot_tiles()` takes a data frame of coordinates and to draw the corresponding
+#' shapes to a {ggplot2} object.
+#'
+#' @param df A data frame of coordinates
+#' @param labels A boolean (logical) value indicating if labels should be plotted.
+#' @returns A {ggplot2} object
+#' @import ggplot2
+#' @examples
+#' # Prepare coordinates dataframe
+#' df_matrix = geo_tile_data[['US States']]
+#' df_coord = make_tiles(df_matrix, "square")
+#'
+#' # Show the tile map
+#' plot_tiles(df_coord)
+#'
+#' # Without labels
+#' plot_tiles(df_coord, fALSE)
+#' @export
+plot_tiles <- function(df, labels = TRUE) {
+  missing_cols = setdiff(c("x", "y", "center_x", "center_y", "id"), columns(df))
+  if(length(missing_cols) > 0) {
+    stop(paste("This data frame is missing the required columns:", paste(missing_cols, collapse = ", ")))
+  }
+  if(!is.logical(labels)) {
+    stop("Please indicate if tile labels should be included or not with TRUE/FALSE")
+  }
+
+  main <-
+    ggplot2::ggplot() +
+    ggplot2::geom_polygon(
+      ggplot2::aes(x, y, group = id),
+      df
+    )
+
+  if(labels) {
+    main <-
+      main +
+      ggplot2::geom_text(
+        ggplot2::aes(
+          center_x, center_y,
+          label = id,
+          color = "white"
+        ),
+        unique.data.frame(df[,c("center_x", "center_y", "id")])
+      )
+  }
+  return(main)
 }
