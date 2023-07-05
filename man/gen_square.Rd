@@ -24,7 +24,7 @@ next square tile shapes to draw.
 }
 \description{
 `gen_square()` creates a series of polygon data points for an individual
-tile group.
+square tile group.
 }
 \examples{
 gen_square("A", 10, 2, c(0,0))

@@ -38,8 +38,13 @@ layout = matrix(
   nrow = 4,
   ncol = 4
 )
+
+# Square tile map
 make_tiles(layout, 'square', 10, 2)
+
+# Hexagon tile map
+make_tiles(layout, 'hexagon', 10, 2)
 }
 \seealso{
-[make_square_tiles(), gen_square()]
+[make_square_tiles(), make_hex_tiles(), make_square_tiles()]
 }

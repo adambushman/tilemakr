@@ -1,7 +1,7 @@
 #' Generate Square
 #'
 #' `gen_square()` creates a series of polygon data points for an individual
-#' tile group.
+#' square tile group.
 #'
 #' @param group_id A unique identifier for the series of polygon data points
 #' creating a tile shape. Derived from the matrix layout.
@@ -38,7 +38,7 @@ gen_square <- function (group_id, size, padding, start) {
 }
 
 
-#' Make Square Tile
+#' Make Square Tile Data
 #'
 #' `make_square_tiles()` creates a data frame of tile data points for each
 #' valid element observed in the layout.

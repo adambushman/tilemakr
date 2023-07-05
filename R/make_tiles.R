@@ -11,7 +11,7 @@
 #' @param size An integer detailing the length and width of the square tile shape.
 #' @param padding An integer detailing the space between surrounding square
 #' tile shapes.
-#' @seealso [make_square_tiles(), gen_square()]
+#' @seealso [make_square_tiles(), make_hex_tiles(), make_square_tiles()]
 #' @returns A data frame of coordinates to draw tile maps.
 #' @examples
 #' layout = matrix(
@@ -25,7 +25,12 @@
 #'   nrow = 4,
 #'   ncol = 4
 #' )
+#'
+#' # Square tile map
 #' make_tiles(layout, 'square', 10, 2)
+#'
+#' # Hexagon tile map
+#' make_tiles(layout, 'hexagon', 10, 2)
 #' @export
 make_tiles <- function(
     layout,
@@ -61,7 +66,7 @@ make_tiles <- function(
   if(type == "square") {
     return(make_square_tiles(layout, size, padding))
   } else if (type == "hexagon") {
-    print("Not yet available")
+    return(make_hex_tiles(layout, size, padding))
   }
 }
 
