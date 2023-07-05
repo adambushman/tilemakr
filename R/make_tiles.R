@@ -86,9 +86,12 @@ make_tiles <- function(
 #' plot_tiles(df_coord, fALSE)
 #' @export
 plot_tiles <- function(df, labels = TRUE) {
-  missing_cols = setdiff(c("x", "y", "center_x", "center_y", "id"), columns(df))
+  missing_cols = setdiff(c("x", "y", "center_x", "center_y", "id"), names(df))
   if(length(missing_cols) > 0) {
     stop(paste("This data frame is missing the required columns:", paste(missing_cols, collapse = ", ")))
+  }
+  if(is.null(labels)) {
+    labels = TRUE
   }
   if(!is.logical(labels)) {
     stop("Please indicate if tile labels should be included or not with TRUE/FALSE")
@@ -107,9 +110,9 @@ plot_tiles <- function(df, labels = TRUE) {
       ggplot2::geom_text(
         ggplot2::aes(
           center_x, center_y,
-          label = id,
-          color = "white"
+          label = id
         ),
+        color = "white",
         unique.data.frame(df[,c("center_x", "center_y", "id")])
       )
   }
