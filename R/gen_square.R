@@ -28,10 +28,10 @@ gen_square <- function (group_id, size, padding, start) {
   )
 
   next_data <- list(
-    "left" = c(start[1] - size - padding, start[2]),
-    "right" = c(start[1] + size + padding, start[2]),
-    "top" = c(start[1], start[2] + size + padding),
-    "bottom" = c(start[1], start[2] - size - padding)
+    "left" = c(start[1] - size - (padding / 2), start[2]),
+    "right" = c(start[1] + size + (padding / 2), start[2]),
+    "top" = c(start[1], start[2] + size + (padding / 2)),
+    "bottom" = c(start[1], start[2] - size - (padding / 2))
   )
 
   return(list("shape_data" = shape_data, "next_data" = next_data))
