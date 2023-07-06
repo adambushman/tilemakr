@@ -6,12 +6,11 @@
 #' @param layout A matrix outlining the desired tile map layout. Each position
 #' intended for a tile should have a unique identifier while all empty positions
 #' should feature a '0'.
-#' @param type A string identifying the shape type to generate; either a 'square'
-#' or 'hexagon'.
+#' @param type A string identifying the shape type to generate; 'square', 'hexagon',
+#' 'circle', or 'diamond'.
 #' @param size An integer detailing the length and width of the square tile shape.
-#' @param padding An integer detailing the space between surrounding square
-#' tile shapes.
-#' @seealso [make_square_tiles(), make_hex_tiles(), make_square_tiles()]
+#' @param padding An integer detailing the space between surrounding tile shapes.
+#' @seealso [make_square_tiles(), make_hex_tiles(), make_circle_tiles(), make_diamond_tiles()]
 #' @returns A data frame of coordinates to draw tile maps.
 #' @examples
 #' layout = matrix(
@@ -30,11 +29,14 @@
 #' make_tiles(layout, 'square', 10, 2)
 #'
 #' # Hexagon tile map
-#' make_tiles(layout, 'hexagon', 10, 2)
+#' make_tiles(layout, 'hexagon')
+#'
+#' # Circle tile map
+#' make_tiles(layout, 'circle')
 #' @export
 make_tiles <- function(
     layout,
-    type = c("square", "hexagon"),
+    type = c("square", "hexagon", "circle", "diamond"),
     size = 10,
     padding = 2
 ) {
@@ -45,8 +47,8 @@ make_tiles <- function(
     stop("Pass the 'layout' argument a matrix")
   }
 
-  if(is.null(type) | !(type %in% c("square", "hexagon"))) {
-    stop("The 'type' argument must be either 'square' or 'hexagon'")
+  if(is.null(type) | !(type %in% c("square", "hexagon", "circle", "diamond"))) {
+    stop("The 'type' argument must be either 'square', 'hexagon', 'circle', or 'diamond'")
   }
 
   if(!is.numeric(size) | size < 1) {
@@ -67,6 +69,10 @@ make_tiles <- function(
     return(make_square_tiles(layout, size, padding))
   } else if (type == "hexagon") {
     return(make_hex_tiles(layout, size, padding))
+  } else if (type == "circle") {
+    return(make_circle_tiles(layout, size, padding))
+  } else if (type == "diamond") {
+    return(make_diamond_tiles(layout, size, padding))
   }
 }
 

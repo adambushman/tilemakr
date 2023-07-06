@@ -4,20 +4,24 @@
 \alias{make_tiles}
 \title{Make Tiles}
 \usage{
-make_tiles(layout, type = c("square", "hexagon"), size = 10, padding = 2)
+make_tiles(
+  layout,
+  type = c("square", "hexagon", "circle", "diamond"),
+  size = 10,
+  padding = 2
+)
 }
 \arguments{
 \item{layout}{A matrix outlining the desired tile map layout. Each position
 intended for a tile should have a unique identifier while all empty positions
 should feature a '0'.}
 
-\item{type}{A string identifying the shape type to generate; either a 'square'
-or 'hexagon'.}
+\item{type}{A string identifying the shape type to generate; 'square', 'hexagon',
+'circle', or 'diamond'.}
 
 \item{size}{An integer detailing the length and width of the square tile shape.}
 
-\item{padding}{An integer detailing the space between surrounding square
-tile shapes.}
+\item{padding}{An integer detailing the space between surrounding tile shapes.}
 }
 \value{
 A data frame of coordinates to draw tile maps.
@@ -43,8 +47,11 @@ layout = matrix(
 make_tiles(layout, 'square', 10, 2)
 
 # Hexagon tile map
-make_tiles(layout, 'hexagon', 10, 2)
+make_tiles(layout, 'hexagon')
+
+# Circle tile map
+make_tiles(layout, 'circle')
 }
 \seealso{
-[make_square_tiles(), make_hex_tiles(), make_square_tiles()]
+[make_square_tiles(), make_hex_tiles(), make_circle_tiles(), make_diamond_tiles()]
 }

@@ -90,7 +90,33 @@ str(layout_data)
 
 The data frame has (x,y) coordinates for drawing the polygon. {ggplot2} will use the *id* field to properly group the coordinates to their respective shape groups. We also get (center_x,center_y) coordinates useful for plotting the tile names.
 
-The `make_tiles()` function currently supports 'square' and 'hexagon' tile shapes.
+The `make_tiles()` function currently supports 'square', 'hexagon', 'circle', and 'diamond' tile shapes:
+
+```{r}
+layout <-
+  matrix(
+    c("A", 0, 0, 0, 0, "B", "C", 0, 
+      0, 0, "D", 0, "E", "F", 0, 0), 
+    nrow = 4, ncol = 4, byrow = TRUE
+  )
+
+shapes <- c("square", "hexagon", "circle", "diamond")
+full_data = data.frame(matrix(nrow = 0, ncol = 6))
+colnames(full_data) = c("id", "x", "y", "center_x", "center_y", "shape")
+
+for(s in shapes) {
+  temp = make_tiles(layout, s, 10, 2)
+  temp$shape = s
+  full_data = rbind(full_data, temp)
+}
+
+ggplot2::ggplot() +
+  ggplot2::geom_polygon(
+    ggplot2::aes(x, y, group = id), full_data
+  ) + 
+  ggplot2::coord_equal() +
+  ggplot2::facet_wrap(~shape)
+```
 
 ## Visualizing the tile map
 

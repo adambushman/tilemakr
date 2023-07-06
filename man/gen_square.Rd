@@ -10,7 +10,7 @@ gen_square(group_id, size, padding, start)
 \item{group_id}{A unique identifier for the series of polygon data points
 creating a tile shape. Derived from the matrix layout.}
 
-\item{size}{An integer detailing the length and width of the square tile shape.}
+\item{size}{An integer detailing the point radius of the square tile shape.}
 
 \item{padding}{An integer detailing the space between surrounding square
 tile shapes.}
