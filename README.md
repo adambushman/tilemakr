@@ -25,7 +25,25 @@ Once installed, load the package using the `library` command below or reference 
 library("tilemakr")
 ```
 
-You'll find helpful functions for turning custom layouts into plottable data frames in {ggplot2}.
+# Making Your First Tile Map
+
+It's really easy to go from a tabular layout to a tile map with {tilemaker}. Just transform the layout to shape data and visualize in {ggplot2}:
+
+```
+# Tabular layout in matrix form
+layout <-
+  matrix(
+    c("A", 0, 0, 0, 0, "B", "C", 0, 
+      0, 0, "D", 0, "E", "F", 0, 0), 
+    nrow = 4, ncol = 4, byrow = TRUE
+  )
+
+# Hexagon tile map
+shape_data <- tilemakr::make_tiles(layout, "hexagon")
+tilemakr::plot_tiles(shape_data)
+```
+
+Create the beloved US States tile map or any such variation. And tile maps aren't just for geography; leverage the benefits of a tile map with any layout of interest.
 
 # Credits
 
