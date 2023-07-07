@@ -115,7 +115,8 @@ plot_tiles <- function(df, labels = TRUE) {
         ),
         color = "white",
         unique.data.frame(df[,c("center_x", "center_y", "id")])
-      )
+      ) +
+      ggplot2::coord_equal()
   }
   return(main)
 }
@@ -144,10 +145,10 @@ preview_shapes <- function() {
   }
 
   plot <-
-    ggplot() +
-    geom_polygon(aes(x, y, group = id), full_data) +
-    coord_equal() +
-    facet_wrap(~shape)
+    ggplot2::ggplot() +
+    ggplot2::geom_polygon(aes(x, y, group = id), full_data) +
+    ggplot2::coord_equal() +
+    ggplot2::facet_wrap(~shape)
 
   return(plot)
 }

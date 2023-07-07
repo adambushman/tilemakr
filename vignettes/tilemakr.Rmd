@@ -16,9 +16,9 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-This package creates custom tile map data for...anything. Turn a matrix layout into coordinates that feed {ggplot2} layers.
+`{tilemakr}` is a package for R that creates custom tile map data for...anything. Turn a matrix layout into coordinates that feed {ggplot2} layers.
 
-If you've ever wanted to recreate the US tile map design with your own layout, this package is for you.
+If you've ever wanted to adopt the US tile map design for your own layout, this package is for you.
 
 # Getting Started
 
@@ -42,17 +42,17 @@ Once installed, load the package using the `library` command below or reference 
 library("tilemakr")
 ```
 
-You'll find helpful functions for turning custom layouts into plotable data frames in {ggplot2}.
+You'll find helpful functions for turning custom layouts into plot able data frames in {ggplot2}.
 
 # About Tile Maps
 
-Tile maps are an incredible alternative to traditional, geographically true shape file maps. When geographic shape, scale, and relationships aren't the focus of a visualization, tile maps step in to let the true focus shine.
+Tile maps are an incredible alternative to traditional, geographically true shape file maps. When geographic shape, scale, and relationships aren't the primary focus of a visualization, tile maps step in to let the true focus shine.
 
 By standardizing size and shape, they allow the real variables of interest to be the star of the show. The most common versions are square and hexagon tile maps of the United States:
 
 ![Square Tile Map](https://images.presentationgo.com/2020/09/Square-Tile-Grid-Map-USA-PowerPoint.png) ![Hexagon Tile Map](https://images.presentationgo.com/2020/09/Hex-Tile-Grid-Map-USA-PowerPoint.png)
 
-Outside of this popular example (for which there are existing resources for reproduction), tools for applying the technique to any custom layout appears to be missing; until now.
+This popular example features existing, public resources for quick reproduction. But if a tile map was needed for the states of Mexico, the nations of Europe, or a convention center layout, there are few if any tools to help...until `{tilemaker}`.
 
 # Creating a Tile Map
 
@@ -74,13 +74,29 @@ layout = matrix(
 )
 ```
 
-What we have here is a 4x4 grid. Our design intends to have tiles named "A", "B", "C", etc., in their respective positions, with zero (0) marking empty regions in our layout. You'll also notice each position intended for a tile has a unique name or ID.
+What we have here is a 4x4 grid defining the layout and names of the elements for which to draw our shapes. Each layout used in `{tilemakr}` functions follows the following principles:
+
+-   Every position in the layout has a value
+-   Every position intended for a tile needs a unique name/ID ("A", "B", ...)
+-   Every position intended to be an empty region without a tile must contain a zero (0)
+
+For experimenting with `{tilemakr}`, you can utilize the demo data housed right in the package, stored as elements within the `demo_data` list object. Access with base R syntax:
+
+```{r}
+# Using '$' notation
+layout <- demo_data$`Example Matrix`
+
+# Using '[[]]' notation
+layout <- demo_data[["Example Matrix"]]
+```
+
+If your layout exists in a data frame or other tabular structure that's not a matrix, consider using the `tabular_to_matrix()` function (example shown in [Tile map tricks](#tricks)).
 
 ## Layout to Data Points
 
-Generating the data necessary for this layout is as simple as calling the `make_tiles()` function and passing it the *layout* matrix. It will return us a data frame we can use in conjunction with {ggplot2}.
+With our layout defined properly, we can quickly generate the data necessary for drawing the tile map by calling the `make_tiles()` function and passing it the `layout` variable containing our matrix. It will return us a data frame we can use in conjunction with {ggplot2}.
 
-We need only pass the layout and specify the type of tile we want to draw:
+We need only pass the layout and specify the shape of tile we want to draw:
 
 ```{r warning=FALSE}
 layout_data = make_tiles(layout, "square")
@@ -88,48 +104,23 @@ layout_data = make_tiles(layout, "square")
 str(layout_data)
 ```
 
-The data frame has (x,y) coordinates for drawing the polygon. {ggplot2} will use the *id* field to properly group the coordinates to their respective shape groups. We also get (center_x,center_y) coordinates useful for plotting the tile names.
+The data frame has (x,y) coordinates for drawing the polygon. {ggplot2} will use the *id* field to properly group the coordinates to their respective shape groups. We also get (center_x,center_y) coordinates useful for plotting the tile names or other data point we may care about.
 
-The `make_tiles()` function currently supports 'square', 'hexagon', 'circle', and 'diamond' tile shapes:
+The `make_tiles()` function currently supports 'square', 'hexagon', 'circle', and 'diamond' tile shapes. You can preview what tiles shapes look like with one of the demo data layouts by calling `preview_shapes()`:
 
 ```{r}
-layout <-
-  matrix(
-    c("A", 0, 0, 0, 0, "B", "C", 0, 
-      0, 0, "D", 0, "E", "F", 0, 0), 
-    nrow = 4, ncol = 4, byrow = TRUE
-  )
-
-shapes <- c("square", "hexagon", "circle", "diamond")
-full_data = data.frame(matrix(nrow = 0, ncol = 6))
-colnames(full_data) = c("id", "x", "y", "center_x", "center_y", "shape")
-
-for(s in shapes) {
-  temp = make_tiles(layout, s, 10, 2)
-  temp$shape = s
-  full_data = rbind(full_data, temp)
-}
-
-ggplot2::ggplot() +
-  ggplot2::geom_polygon(
-    ggplot2::aes(x, y, group = id), full_data
-  ) + 
-  ggplot2::coord_equal() +
-  ggplot2::facet_wrap(~shape)
+preview_shapes()
 ```
 
 ## Visualizing the tile map
 
-With our data set ready to go, we can call `plot_tiles()` to get a quick view of the tile map data. It returns a basic, yet versatile, {ggplot2} object:
+With our layout now in the form of coordinates in a data frame, we can call `plot_tiles()` to get a quick view of the tile map data. It returns a basic, yet versatile, {ggplot2} object:
 
 ```{r warning=FALSE}
 hex_layout <- make_tiles(layout, "hexagon")
 
-p <- plot_tiles(hex_layout)
-
-p + ggplot2::coord_equal()
+plot_tiles(hex_layout)
 ```
-
 Alternatively, we can call {ggplot2} geoms in the traditional workflow to plot the tile map data:
 
 ```{r warning=FALSE}
@@ -139,28 +130,27 @@ Alternatively, we can call {ggplot2} geoms in the traditional workflow to plot t
 
 ggplot2::ggplot() +
   ggplot2::geom_polygon(
-    ggplot2::aes(x, y, group = id, fill = id), 
+    ggplot2::aes(x, y, group = id), 
     # Our data goes here
-    data = layout_data, 
+    data = hex_layout, 
     show.legend = FALSE
   ) +
   ggplot2::geom_text(
     ggplot2::aes(center_x, center_y, label = id), 
     # We remove the extra (x,y) entries to only plot the tile name once each
-    data = unique.data.frame(layout_data[,c("center_x", "center_y", "id")])
+    data = unique.data.frame(hex_layout[,c("center_x", "center_y", "id")]), 
+    color = "white"
   ) +
   ggplot2::coord_equal()
 ```
 
-We can further style our map with {ggplot2} layers.
-
-# Tile map tricks
+# Tile map tricks {#tricks}
 
 ### Converting layout data types
 
-When designing custom layouts, you might find it easier to use a tabular data set. Excel, for example, could offer the quick, natural design experience. You could then read the saved .CSV file where after you'll realize you have a data frame, not a matrix.
+When designing custom layouts, you might find it easier to start with a tabular data set. Excel, for example, could offer a quick, natural design experience. You could then read the saved .CSV file into your R session without headers. 
 
-In such cases, simple exclude your column names (header) and use our conversion function: `tabular_to_matrix()`.
+What you'll have is a data frame or tibble but you can quickly get to a matrix using `tabular_to_matrix()`:
 
 ```{r}
 layout <- demo_data[["Example Matrix"]]
@@ -177,14 +167,14 @@ class(matrix_layout)
 
 ### Customizing the tile map data
 
-We can do some additional customization of our tile maps, like setting the *size* and *padding* arguments to our preferred specifications:
+We can do some additional customization of our tile maps, like setting the *size* and *padding* arguments to non-standard values:
 
 ```{r warning=FALSE}
 layout_data = make_tiles(layout, type = "square", size = 5, padding = 5)
 
 ggplot2::ggplot() +
   ggplot2::geom_polygon(
-    ggplot2::aes(x, y, group = id, fill = id), 
+    ggplot2::aes(x, y, group = id), 
     # Our data goes here
     data = layout_data, 
     show.legend = FALSE
@@ -192,11 +182,11 @@ ggplot2::ggplot() +
   ggplot2::coord_equal()
 ```
 
-By setting *size* to 5 and *padding* to 5, we get a layout that's much more spread out.
+We can apply all kinds of layers to further style and customize the plot: scaling the fill by a variable, adding annotations, changing the theme, adding labels, and more.
 
 ### Joining with other data
 
-We can also join (merge) the tile map points data with our own data sets. This can be useful for better labeling or, in the case below, we've added a gradient fill to our tiles, scaling with a joined variable *sales*.
+We can also join (merge) the tile map data points with our own data sets. This can be useful for better labeling or, in the case below, we've added a gradient fill to our tiles, scaling with a joined variable *sales*.
 
 ```{r}
 new_data <- 
@@ -220,17 +210,16 @@ ggplot2::ggplot() +
   ggplot2::coord_equal()
 ```
 
-
 # Ready Tile Layouts
 
-This package contains some ready-made matrix layouts. From popular country's states to European nations, the matrix can be loaded in short order using `tile_layouts()`:
+This package contains some ready-made matrix layouts. From popular country's states to European nations, each matrix can be loaded in short order using `tile_layouts()`:
 
 ```{r}
 euro_layout <- tile_layouts[["European Countries"]]
 
 euro_data <- make_tiles(euro_layout, "hexagon")
 
-plot_tiles(euro_data) + ggplot2::coord_equal()
+plot_tiles(euro_data)
 ```
 
 # Possibilities
