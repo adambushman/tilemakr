@@ -129,3 +129,49 @@ plot_tiles <- function(df, labels = TRUE) {
   }
   return(main)
 }
+
+
+
+#' Preview Shapes
+#'
+#' `preview_shapes()` shows a preview of what tile maps would look like with
+#' different shapes.
+#'
+#' @returns A {ggplot2} object
+#' @import ggplot2
+#' @examples
+#' preview_shapes()
+#' @export
+plot_tiles <- function(df, labels = TRUE) {
+  missing_cols = setdiff(c("x", "y", "center_x", "center_y", "id"), names(df))
+  if(length(missing_cols) > 0) {
+    stop(paste("This data frame is missing the required columns:", paste(missing_cols, collapse = ", ")))
+  }
+  if(is.null(labels)) {
+    labels = TRUE
+  }
+  if(!is.logical(labels)) {
+    stop("Please indicate if tile labels should be included or not with TRUE/FALSE")
+  }
+
+  main <-
+    ggplot2::ggplot() +
+    ggplot2::geom_polygon(
+      ggplot2::aes(x, y, group = id),
+      df
+    )
+
+  if(labels) {
+    main <-
+      main +
+      ggplot2::geom_text(
+        ggplot2::aes(
+          center_x, center_y,
+          label = id
+        ),
+        color = "white",
+        unique.data.frame(df[,c("center_x", "center_y", "id")])
+      )
+  }
+  return(main)
+}

@@ -3,11 +3,10 @@
 \docType{data}
 \name{tile_layouts}
 \alias{tile_layouts}
-\title{List of matrices to create tile maps}
+\title{Tile Layouts}
 \format{
 ## `tile_layouts`
-A list of matrices for creating tile maps using any shape supported
-by the {tilemaker} functions.
+A list of matrices
 }
 \usage{
 tile_layouts

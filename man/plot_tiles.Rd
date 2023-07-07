@@ -5,6 +5,8 @@
 \title{Plot Tiles}
 \usage{
 plot_tiles(df, labels = TRUE)
+
+plot_tiles(df, labels = TRUE)
 }
 \arguments{
 \item{df}{A data frame of coordinates}
@@ -13,10 +15,15 @@ plot_tiles(df, labels = TRUE)
 }
 \value{
 A {ggplot2} object
+
+A {ggplot2} object
 }
 \description{
 `plot_tiles()` takes a data frame of coordinates and to draw the corresponding
 shapes to a {ggplot2} object.
+
+`preview_shapes()` shows a preview of what tile maps would look like with
+different shapes.
 }
 \examples{
 # Prepare coordinates dataframe
@@ -28,4 +35,5 @@ plot_tiles(df_coord)
 
 # Without labels
 plot_tiles(df_coord, fALSE)
+preview_shapes()
 }
