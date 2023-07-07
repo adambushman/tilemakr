@@ -21,10 +21,10 @@ gen_square <- function (group_id, size, padding, start) {
 
   shape_data <- data.frame(
     id = group_id,
-    x =(size * x_adj) + start[1],
-    y = (size * y_adj) + start[2],
-    center_x = (size / 2) + start[1],
-    center_y = (size / 2) + start[2]
+    x =(size * 2 * x_adj) + start[1],
+    y = (size * 2 * y_adj) + start[2],
+    center_x = size + start[1],
+    center_y = size + start[2]
   )
 
   next_data <- list(
