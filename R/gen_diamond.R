@@ -73,17 +73,8 @@ gen_diamond <- function(group_id, size, padding, start) {
 #' @returns A data frame of coordinates for drawing the diamond tiles and center
 #' coordinates for plotting the group text.
 #' @examples
-#' layout = matrix(
-#'   data = c(
-#'     "A", 0, 0, "B",
-#'     0, "C", "D", "E",
-#'     0, 0, "F", 0,
-#'     0, "G", 0, 0
-#'   ),
-#'   byrow = TRUE,
-#'   nrow = 4,
-#'   ncol = 4
-#' )
+#' layout <- demo_data[["Example Matrix"]]
+#'
 #' make_diamond_tiles(layout, 10, 2)
 make_diamond_tiles <- function(layout, size, padding) {
   row_order = rev(1:nrow(layout))

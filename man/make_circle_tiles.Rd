@@ -25,17 +25,8 @@ coordinates for plotting the group text.
 valid element observed in the layout.
 }
 \examples{
-layout = matrix(
-  data = c(
-    "A", 0, 0, "B",
-    0, "C", "D", "E",
-    0, 0, "F", 0,
-    0, "G", 0, 0
-  ),
-  byrow = TRUE,
-  nrow = 4,
-  ncol = 4
-)
+layout <- demo_data[["Example Matrix"]]
+
 make_circle_tiles(layout, 10, 2)
 }
 \seealso{

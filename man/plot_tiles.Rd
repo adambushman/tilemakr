@@ -27,5 +27,5 @@ df_coord = make_tiles(df_matrix, "square")
 plot_tiles(df_coord)
 
 # Without labels
-plot_tiles(df_coord, fALSE)
+plot_tiles(df_coord, FALSE)
 }

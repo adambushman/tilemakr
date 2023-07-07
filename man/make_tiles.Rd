@@ -31,17 +31,7 @@ A data frame of coordinates to draw tile maps.
 tile maps which can be plotted in {ggplot2}.
 }
 \examples{
-layout = matrix(
-  data = c(
-    "A", 0, 0, "B",
-    0, "C", "D", "E",
-    0, 0, "F", 0,
-    0, "G", 0, 0
-  ),
-  byrow = TRUE,
-  nrow = 4,
-  ncol = 4
-)
+layout = demo_data[["Example Matrix"]]
 
 # Square tile map
 make_tiles(layout, 'square', 10, 2)

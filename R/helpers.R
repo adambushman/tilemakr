@@ -9,7 +9,7 @@
 #' @seealso [make_tiles()]
 #' @returns A matrix form of the layout intended for a tile maps.
 #' @examples
-#' layout = tabular_layout
+#' layout <- demo_data[["Example Data Frame"]]
 #'
 #' # Currently a data frame
 #' class(layout)

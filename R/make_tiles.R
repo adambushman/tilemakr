@@ -13,17 +13,7 @@
 #' @seealso [make_square_tiles(), make_hex_tiles(), make_circle_tiles(), make_diamond_tiles()]
 #' @returns A data frame of coordinates to draw tile maps.
 #' @examples
-#' layout = matrix(
-#'   data = c(
-#'     "A", 0, 0, "B",
-#'     0, "C", "D", "E",
-#'     0, 0, "F", 0,
-#'     0, "G", 0, 0
-#'   ),
-#'   byrow = TRUE,
-#'   nrow = 4,
-#'   ncol = 4
-#' )
+#' layout = demo_data[["Example Matrix"]]
 #'
 #' # Square tile map
 #' make_tiles(layout, 'square', 10, 2)
@@ -94,7 +84,7 @@ make_tiles <- function(
 #' plot_tiles(df_coord)
 #'
 #' # Without labels
-#' plot_tiles(df_coord, fALSE)
+#' plot_tiles(df_coord, FALSE)
 #' @export
 plot_tiles <- function(df, labels = TRUE) {
   missing_cols = setdiff(c("x", "y", "center_x", "center_y", "id"), names(df))

@@ -19,7 +19,7 @@ matrix for proper use in the `make_tiles()` function. Remember to exclude
 column names (or remove the header) from the data frame.
 }
 \examples{
-layout = tabular_layout
+layout <- demo_data[["Example Data Frame"]]
 
 # Currently a data frame
 class(layout)

@@ -163,11 +163,13 @@ When designing custom layouts, you might find it easier to use a tabular data se
 In such cases, simple exclude your column names (header) and use our conversion function: `tabular_to_matrix()`.
 
 ```{r}
+layout <- demo_data[["Example Matrix"]]
+
 # Currently a data frame
-class(tabular_layout)
+class(layout)
 
 # To matrix
-matrix_layout = tabular_to_matrix(tabular_layout)
+matrix_layout = tabular_to_matrix(layout)
 
 # Now it's a matrix
 class(matrix_layout)
@@ -200,7 +202,7 @@ We can also join (merge) the tile map points data with our own data sets. This c
 new_data <- 
   merge(
     layout_data, 
-    sales_data, 
+    demo_data[["Sales Data"]], 
     by = "id"
   )
 
