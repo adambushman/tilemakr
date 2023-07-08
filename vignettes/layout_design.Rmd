@@ -1,0 +1,97 @@
+---
+title: "Layout design for {tilemakr}"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{layout_design}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+If you're using `{tilemakr}` you probably already know what you want to create. Chances are, your vision is a tile map layout for which there aren't any ready, public resources. For this purpose, `{tilemakr}` was created.
+
+Before getting to the exciting aspects of visualizing your first tile map or polishing the edges of your styled visualization, we need to design the layout that will feed the wonderful `{tilemakr}` engine. Let's get started!
+
+# Objective for layout design
+
+`{tilemakr}` was built on the foundation of layouts designed in a two dimensional grid. Matrices are the data structure required for all its functions. So our objective in designing a layout is to assemble a table style layout that can be turned into a matrix.
+
+Another consideration is what makes up this grid. Tile maps generally feature shapes (the tiles themselves) and empty space (a void of tiles). When designing, we take both of these elements into consideration and follow the below principles:
+
+-   Every position in the layout has a value
+-   Every position intended for a tile needs a unique name/ID ("A", "B", ...)
+-   Every position intended to be an empty region without a tile must contain a zero (0)
+
+We now have a solid understanding of what we're after in our design. Let's get to it
+
+# Design approach
+
+There's no single, right way to design your layout. You can start anywhere you like: pen/paper, graphic design software, or an observable physical space. But once a layout is conceptualized, we must convert our design to a machine-readable format fit for `{tilemakr}`.
+
+### Desiging in Excel
+
+For design oriented users, you'll likely find Excel to be the most intuitive, friendly resource. Given it's table interface and point/click/type user experience, you'll likely create your layout in short order. Even technical users may opt for Excel if the layout is large and intricate.
+
+In cell A1, we'll put "A", in B1 "B", in A2 "C", and in B2 "0" (all without quotations). And that's it. We don't need headers, we've given every position a value (A-C will be tiles while 0 will be empty). Now we give it a file name and put in a pathway of our choosing (let's say the path is `C:/test/my_matrix`).
+
+Pivoting now to our R session, we can use read in that data like so: 
+
+```{r eval=FALSE}
+# A data frame right now
+layout <- read.csv('C:/test/my_matrix', header = FALSE)
+
+# Convert to a matrix
+new_layout <- tabular_to_matrix(layout)
+```
+
+### Desiging in R
+
+We can also create layouts in R and, with a little forethought, save them in matrix form from the onset. 
+
+Matrices in R require three components: the data, the number of rows, and the number of columns. Optionally, you can specify how the data is added to the matrix (we will alter the default). The data feeding R matricies is generally in vector form. So a 2x2 matrix with *A* and *C* in the first column and *B* and *0* in the second column would be entered like this:
+
+```{r}
+# With column ordered insertion
+data <- c("A", "C", "B", "0")
+
+# With row ordered insertion
+data <- c("A", "B", "C", "0")
+```
+
+This can make it hard to follow which rows and columns are which. We recommend your data vector be constructed like this:
+
+```{r}
+# With row ordered insertion
+data <- c(
+  "A", "B", 
+  "C", "0"
+)
+```
+
+R's compiler sees no difference in this structure from the former but the way we've arranged the code visually gives us a more digestable framework To create the matrix, we just specify the parameters like so:
+
+```{r}
+layout <- matrix(
+  data = c(
+    "A", "B", 
+    "C", "0"
+  ), 
+  ncol = 2, nrow = 2, 
+  byrow = TRUE # Otherwise A,B would be in the first column
+)
+```
+
+
+# Conclusion
+
+Now we have a 2x2 matrix where A-C will each be a tile while 0 will be an empty space. We can now feed this variable into functions like `make_tiles()` to generate shape representations and `plot_tiles()` to get a first glimpse at our masterpiece.
+
+Take a look at our *{tilemaker} workflow* vignette for an in depth example of how to go from a matrix layout like these (although a bit more interesting) to a beautiful, compelling tile map visualization, including all the {ggplot2} layers you can think of.

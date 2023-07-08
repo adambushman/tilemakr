@@ -1,0 +1,120 @@
+---
+title: "tilemakr_workflow"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{tilemakr_workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+Tile maps are a delight to build and enjoy once finished. `{tilemakr`} takes out the guess work on getting started.
+
+By now you're comfortable creating a layout (having surely read our vignette *Lakout design for {tilemakr}*) and are now ready to hit whip up some amazing tile maps with {tilemakr} and {ggplot2}. 
+
+Let's get underway with the `NBA Franchises` layout found in this package.
+
+
+# Grabbing the data and making a shape choice
+
+We begin my loading the layout from the package. As you can see, it's already in matrix format. Additionally, we've loaded another data set featuring variables that will enrich our visualization:
+
+```{r}
+layout <- tile_layouts[["NBA Franchises"]]
+
+standings <- demo_data[["NBA Standings"]]
+```
+
+We then just need to turn the layout into our desired shape data using `make_tiles()`. We'll create a "square" tile map. We then merge the two data sets together so we can make a proper visualization.
+
+```{r}
+shapes_data <- make_tiles(layout, "square")
+
+shapes_data <- merge(
+  shapes_data, 
+  standings,
+  by.x = "id", 
+  by.y = "team_abbreviation"
+)
+```
+
+
+# Taking a first look
+
+With {ggplot2} we can create a stunning visualization. To begin, we'll create a basic plot to get a feel for the layout in square shape form. If we don't like the look, we need only toggle the shape parameter of `make_tiles()` above.
+
+```{r}
+# install.packages('ggplot2')
+library('ggplot2')
+
+p <- 
+  ggplot() +
+  geom_polygon(
+    aes(x, y, group = id, fill = wins), 
+    shapes_data, 
+    show.legend = FALSE
+  ) +
+  geom_text(
+    aes(
+      center_x, center_y, 
+      label = paste0(id, "\n", wins), 
+      color = ifelse(wins > 35, "black", "white")
+    ), 
+    unique.data.frame(shapes_data[,c("id", "center_x", "center_y", "wins")]),
+    show.legend = FALSE
+  )
+
+p
+
+```
+
+This, however, looks great to begin with. We can now begin to tweak the styling since the foundation is incredible.
+
+# Advanced styling
+
+The first thing to do is change the gradient and scale the text color for proper contrast. Then, to highlight an important takeaway from the visualization, we can add text annotation layers to the bottom, left-hand corner. 
+
+```{r}
+p <- 
+  p +
+  scale_fill_gradient(
+    low = "#42047e", 
+    high = "#07f49e"
+  ) +
+  scale_color_identity() +
+  annotate(
+    "text", x = 0, y = 20, size = 20, hjust = 0, 
+    color = "#347885", fontface = "bold", label = "18"
+  ) +
+  annotate(
+    "text", x = 0, y = 5, size = 4, hjust = 0, vjust = 1, lineheight = 0.8, 
+    color = "#4C5A5D", label = "teams between\n35 and 48 wins"
+  ) +
+  coord_equal()
+
+p
+
+```
+
+I'm really liking the look of of this data viz. We can throw on some title, subtitle, and caption text. Altering the theme to a bare bones default and throwing our own customizations like margin, background, etc., gives us a real winner.
+
+```{r}
+p +
+  labs(
+    title = "The NBA has a massive middle class", 
+    subtitle = "Total wins by each franchise during the 2022-23 season", 
+    caption = "Data via NBA API | Accessed via {hoopR}\nDesigned by @adam_bushman using {tilemakr}"
+  ) +
+  theme_void() +
+  theme(
+    plot.margin = margin(15, 15, 15, 15), 
+    plot.background = element_rect(fill = "#E5EFF0", color = NA), 
+    plot.title = element_text(size = 18, face = "bold", color = "#4C5A5D"), 
+    plot.subtitle = element_text(size = 10, color = "#4C5A5D"), 
+    plot.caption = element_text(size = 8, color = "#4C5A5D")
+  )
+
+```
+
+It's really that straight forward to go from a custom, tabular layout to a compelling tile map. As fun as it is to styling a visualization, creating the shape layout is a big headache. But no longer with {tilemakr}.
