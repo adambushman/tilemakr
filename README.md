@@ -64,6 +64,17 @@ preview_shapes()
 
 ![Supported Shapes](https://github.com/adambushman/tilemakr/blob/main/man/figures/example_tile_shapes.jpeg)
 
+
+# Possibilities
+
+Using `{tilemakr}`, we can create the foundations of tile maps that turn immaculate once styled with `{ggplot2}`. Take a look at just some of the possibilities.
+
+![Example Square Tile Map](https://github.com/adambushman/tilemakr/blob/main/man/figures/example_map_square.png)
+
+![Example Hexagon Tile Map](https://github.com/adambushman/tilemakr/blob/main/man/figures/example_map_hexagon.png)
+
+![Example Diamond Tile Map](https://github.com/adambushman/tilemakr/blob/main/man/figures/example_map_diamond.png)
+
 # Credits
 
 Authored and Maintained by Adam Bushman
