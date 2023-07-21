@@ -69,7 +69,7 @@ preview_shapes()
 
 Using `{tilemakr}`, we can create the foundations of tile maps that turn immaculate once styled with `{ggplot2}`. Take a look at just some of the possibilities.
 
-![Example Square Tile Map](https://github.com/adambushman/tilemakr/blob/main/man/figures/example_map_square.png)
+![Example Square Tile Map](https://github.com/adambushman/tidytuesday-contribs/blob/b78f7ad525b5ef6830db143493c0a3589b36a3db/wk27-23_historical-markers/utah-historical-markers_final.png)
 
 ![Example Hexagon Tile Map](https://github.com/adambushman/tilemakr/blob/main/man/figures/example_map_hexagon.png)
 
