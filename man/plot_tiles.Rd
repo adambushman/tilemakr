@@ -12,15 +12,15 @@ plot_tiles(df, labels = TRUE)
 \item{labels}{A boolean (logical) value indicating if labels should be plotted.}
 }
 \value{
-A {ggplot2} object
+A `ggplot2` object
 }
 \description{
 `plot_tiles()` takes a data frame of coordinates and to draw the corresponding
-shapes to a {ggplot2} object.
+shapes to a `ggplot2` object.
 }
 \examples{
 # Prepare coordinates dataframe
-df_matrix = geo_tile_data[['US States']]
+df_matrix = tile_layouts[['US States']]
 df_coord = make_tiles(df_matrix, "square")
 
 # Show the tile map

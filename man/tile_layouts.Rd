@@ -5,8 +5,13 @@
 \alias{tile_layouts}
 \title{Tile Layouts}
 \format{
-## `tile_layouts`
-A list of matrices
+A list of matrices, which are:
+\describe{
+\item{`Example Matrix`}{A matrix featuring an example, desired layout}
+\item{`Example Data Frame`}{A data frame featuring the desired layout in a data frame object}
+\item{`Sales Data`}{A data frame featuring sales data associated with shapes id's from `Example Matrix` and `Example Data Frame`}
+\item{`NBA Standings`}{A data frame featuring win/loss records associated with shape id's from `NBA Franchises`}
+}
 }
 \usage{
 tile_layouts

@@ -15,6 +15,7 @@
 #' next square tile shapes to draw.
 #' @examples
 #' gen_square("A", 10, 2, c(0,0))
+#' @noRd
 gen_square <- function (group_id, size, padding, start) {
   x_adj = c(0, 1, 1, 0)
   y_adj = c(0, 0, 1, 1)
@@ -56,6 +57,7 @@ gen_square <- function (group_id, size, padding, start) {
 #' layout <- demo_data[["Example Matrix"]]
 #'
 #' make_square_tiles(layout, 10, 2)
+#' @noRd
 make_square_tiles <- function(layout, size, padding) {
   row_order = rev(1:nrow(layout))
   col_order = 1:ncol(layout)

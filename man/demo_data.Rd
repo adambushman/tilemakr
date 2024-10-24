@@ -3,15 +3,22 @@
 \docType{data}
 \name{demo_data}
 \alias{demo_data}
-\title{Demo Date}
+\title{Demo Data}
 \format{
-## `demo_data`
 A list of matrices and data frames
+\describe{
+\item{`US States`}{A matrix layout featuring US States}
+\item{`Canada Provinces`}{A matrix layout featuring Candadian provinces}
+\item{`Mexico States`}{A matrix layout featuring states of Mexico}
+\item{`NYC Burroughs`}{A matrix layout featuring burroughs of New York}
+\item{`European Countries`}{A matrix layout featuring countries of Europe}
+\item{`NBA Franchises`}{A matrix layout featuring franchises of the National Basketball Association}
+}
 }
 \usage{
 demo_data
 }
 \description{
-A collection of data structures for experimenting with {tilemakr} functions.
+A collection of data structures for experimenting with `tilemakr` functions.
 }
 \keyword{datasets}

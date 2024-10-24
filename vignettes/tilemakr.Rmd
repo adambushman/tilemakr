@@ -39,7 +39,7 @@ Once installed, load the package using the `library` command below or reference 
 ```{r}
 # Load the entire library into the session
 
-library("tilemakr")
+library(tilemakr)
 ```
 
 You'll find helpful functions for turning custom layouts into plot able data frames in {ggplot2}.
