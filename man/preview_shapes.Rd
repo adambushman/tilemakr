@@ -7,7 +7,7 @@
 preview_shapes()
 }
 \value{
-A {ggplot2} object
+A `ggplot2` object
 }
 \description{
 `preview_shapes()` shows a preview of what tile maps would look like with

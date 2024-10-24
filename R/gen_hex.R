@@ -15,6 +15,7 @@
 #' next hexagon tile shapes to draw.
 #' @examples
 #' gen_hex("A", 5, 2, c(0,0))
+#' @noRd
 gen_hex <- function(group_id, size, padding, start) {
 
   primary_r = seq(0, 5 * pi / 3, by = pi / 3) + (pi / 2)
@@ -72,6 +73,7 @@ gen_hex <- function(group_id, size, padding, start) {
 #' layout <- demo_data[["Example Matrix"]]
 #'
 #' make_hex_tiles(layout, 10, 2)
+#' @noRd
 make_hex_tiles <- function(layout, size, padding) {
   row_order = rev(1:nrow(layout))
   col_order = 1:ncol(layout)

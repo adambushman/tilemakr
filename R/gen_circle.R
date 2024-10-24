@@ -15,7 +15,8 @@
 #' next circle tile shapes to draw.
 #' @keywords internal
 #' @examples
-#' gen_circle("A", 5, 2, c(0,0))
+#' gen_circle("A", 10, 2, c(0,0))
+#' @noRd
 gen_circle <- function(group_id, size, padding, start) {
 
   primary_r = seq(0, 2*pi, by = pi/20)
@@ -73,6 +74,7 @@ gen_circle <- function(group_id, size, padding, start) {
 #' layout <- demo_data[["Example Matrix"]]
 #'
 #' make_circle_tiles(layout, 10, 2)
+#' @noRd
 make_circle_tiles <- function(layout, size, padding) {
   row_order = rev(1:nrow(layout))
   col_order = 1:ncol(layout)

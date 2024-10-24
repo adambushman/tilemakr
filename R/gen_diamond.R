@@ -14,7 +14,8 @@
 #' @returns A two element list with the shape data points and coordinates for the
 #' next diamond tile shapes to draw.
 #' @examples
-#' gen_diamond("A", 5, 2, c(0,0))
+#' gen_diamond("A", 10, 2, c(0,0))
+#' @noRd
 gen_diamond <- function(group_id, size, padding, start) {
 
   primary_r = seq(0, 3 * pi / 2, by = pi / 2)
@@ -76,6 +77,7 @@ gen_diamond <- function(group_id, size, padding, start) {
 #' layout <- demo_data[["Example Matrix"]]
 #'
 #' make_diamond_tiles(layout, 10, 2)
+#' @noRd
 make_diamond_tiles <- function(layout, size, padding) {
   row_order = rev(1:nrow(layout))
   col_order = 1:ncol(layout)

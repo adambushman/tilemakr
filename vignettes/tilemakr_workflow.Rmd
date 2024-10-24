@@ -11,14 +11,24 @@ vignette: >
 
 Tile maps are a delight to build and enjoy once finished. `{tilemakr`} takes out the guess work on getting started.
 
-By now you're comfortable creating a layout (having surely read our vignette *Lakout design for {tilemakr}*) and are now ready to whip up some amazing tile maps with {tilemakr} and {ggplot2}. 
+By now you're comfortable creating a layout (having surely read our vignette *Lakout design for {tilemakr}*) and are now ready to hit whip up some amazing tile maps with {tilemakr} and {ggplot2}. 
 
 Let's get underway with the `NBA Franchises` layout found in this package.
 
 
 # Grabbing the data and making a shape choice
 
-Make sure the library is loaded:
+First, make sure you have downloaded `{tilemakr}` package and loaded it into the R session:
+
+```{r eval=FALSE}
+install.packages("remotes")
+
+remotes::install_github(
+  "adambushman/tilemakr", 
+  dependencies = TRUE, 
+  build_vignettes = TRUE
+)
+```
 
 ```{r}
 library('tilemakr')

@@ -28,7 +28,7 @@ A data frame of coordinates to draw tile maps.
 }
 \description{
 `make_tiles()` creates data frame of coordinates to draw square or hexagon
-tile maps which can be plotted in {ggplot2}.
+tile maps which can be plotted in `ggplot2`.
 }
 \examples{
 layout = demo_data[["Example Matrix"]]

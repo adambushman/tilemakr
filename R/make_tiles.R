@@ -1,7 +1,7 @@
 #' Make Tiles
 #'
 #' `make_tiles()` creates data frame of coordinates to draw square or hexagon
-#' tile maps which can be plotted in {ggplot2}.
+#' tile maps which can be plotted in `ggplot2`.
 #'
 #' @param layout A matrix outlining the desired tile map layout. Each position
 #' intended for a tile should have a unique identifier while all empty positions
@@ -69,11 +69,11 @@ make_tiles <- function(
 #' Plot Tiles
 #'
 #' `plot_tiles()` takes a data frame of coordinates and to draw the corresponding
-#' shapes to a {ggplot2} object.
+#' shapes to a `ggplot2` object.
 #'
 #' @param df A data frame of coordinates
 #' @param labels A boolean (logical) value indicating if labels should be plotted.
-#' @returns A {ggplot2} object
+#' @returns A `ggplot2` object
 #' @import ggplot2 rlang
 #' @examples
 #' # Prepare coordinates dataframe
@@ -126,13 +126,15 @@ plot_tiles <- function(df, labels = TRUE) {
 #' `preview_shapes()` shows a preview of what tile maps would look like with
 #' different shapes.
 #'
-#' @returns A {ggplot2} object
-#' @import ggplot2 rlang
+#' @returns A `ggplot2` object
+#' @import ggplot2 rlang utils
 #' @examples
 #' preview_shapes()
 #' @export
 preview_shapes <- function() {
-  layout <- demo_data[["Example Matrix"]]
+  data("data/demo_data.rda")
+  delayedAssign("layout", demo_data[["Example Matrix"]])
+  rm(demo_data)
 
   shapes <- c("square", "hexagon", "circle", "diamond")
   full_data = data.frame(matrix(nrow = 0, ncol = 6))
@@ -148,7 +150,7 @@ preview_shapes <- function() {
     ggplot2::ggplot() +
     ggplot2::geom_polygon(aes(.data$x, .data$y, group = .data$id), full_data) +
     ggplot2::coord_equal() +
-    ggplot2::facet_wrap(~.data$shape)
+    ggplot2::facet_wrap(~shape)
 
   return(plot)
 }
