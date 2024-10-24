@@ -74,7 +74,7 @@ make_tiles <- function(
 #' @param df A data frame of coordinates
 #' @param labels A boolean (logical) value indicating if labels should be plotted.
 #' @returns A {ggplot2} object
-#' @import ggplot2
+#' @import ggplot2 rlang
 #' @examples
 #' # Prepare coordinates dataframe
 #' df_matrix = geo_tile_data[['US States']]
@@ -101,7 +101,7 @@ plot_tiles <- function(df, labels = TRUE) {
   main <-
     ggplot2::ggplot() +
     ggplot2::geom_polygon(
-      ggplot2::aes(x, y, group = id),
+      ggplot2::aes(.data$x, .data$y, group = .data$id),
       df
     )
 
@@ -110,8 +110,8 @@ plot_tiles <- function(df, labels = TRUE) {
       main +
       ggplot2::geom_text(
         ggplot2::aes(
-          center_x, center_y,
-          label = id
+          .data$center_x, .data$center_y,
+          label = .data$id
         ),
         color = "white",
         unique.data.frame(df[,c("center_x", "center_y", "id")])
@@ -127,7 +127,7 @@ plot_tiles <- function(df, labels = TRUE) {
 #' different shapes.
 #'
 #' @returns A {ggplot2} object
-#' @import ggplot2
+#' @import ggplot2 rlang
 #' @examples
 #' preview_shapes()
 #' @export
@@ -146,7 +146,7 @@ preview_shapes <- function() {
 
   plot <-
     ggplot2::ggplot() +
-    ggplot2::geom_polygon(aes(x, y, group = id), full_data) +
+    ggplot2::geom_polygon(aes(.data$x, y, group = .data$id), full_data) +
     ggplot2::coord_equal() +
     ggplot2::facet_wrap(~shape)
 
