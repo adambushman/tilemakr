@@ -32,3 +32,4 @@ gen_circle("A", 5, 2, c(0,0))
 \seealso{
 [make_circle_tiles(), make_tiles()]
 }
+\keyword{internal}

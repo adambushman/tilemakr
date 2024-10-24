@@ -13,6 +13,7 @@
 #' @seealso [make_circle_tiles(), make_tiles()]
 #' @returns A two element list with the shape data points and coordinates for the
 #' next circle tile shapes to draw.
+#' @keywords internal
 #' @examples
 #' gen_circle("A", 5, 2, c(0,0))
 gen_circle <- function(group_id, size, padding, start) {

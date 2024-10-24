@@ -12,6 +12,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 # Introduction
@@ -42,7 +44,13 @@ For design oriented users, you'll likely find Excel to be the most intuitive, fr
 
 In cell A1, we'll put "A", in B1 "B", in A2 "C", and in B2 "0" (all without quotations). And that's it. We don't need headers, we've given every position a value (A-C will be tiles while 0 will be empty). Now we give it a file name and put in a pathway of our choosing (let's say the path is `C:/test/my_matrix`).
 
-Pivoting now to our R session, we can use read in that data like so: 
+Pivoting now to our R session, we can use read in that data like so.
+
+First, ensure the library is loaded:
+
+```{r}
+library('tilemakr')
+```
 
 ```{r eval=FALSE}
 # A data frame right now

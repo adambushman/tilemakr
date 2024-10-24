@@ -20,7 +20,7 @@ shapes to a {ggplot2} object.
 }
 \examples{
 # Prepare coordinates dataframe
-df_matrix = geo_tile_data[['US States']]
+df_matrix = tile_layouts[['US States']]
 df_coord = make_tiles(df_matrix, "square")
 
 # Show the tile map

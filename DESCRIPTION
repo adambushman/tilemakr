@@ -10,11 +10,12 @@ Description: This package creates custom tile map data for...anything. Turn a ma
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Depends: 
     R (>= 2.10)
 Imports: 
-    ggplot2
+    ggplot2, 
+    rlang
 Suggests: 
     knitr,
     rmarkdown
