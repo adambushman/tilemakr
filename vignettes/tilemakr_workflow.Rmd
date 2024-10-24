@@ -18,6 +18,22 @@ Let's get underway with the `NBA Franchises` layout found in this package.
 
 # Grabbing the data and making a shape choice
 
+First, make sure you have downloaded `{tilemakr}` package and loaded it into the R session:
+
+```{r eval=FALSE}
+install.packages("remotes")
+
+remotes::install_github(
+  "adambushman/tilemakr", 
+  dependencies = TRUE, 
+  build_vignettes = TRUE
+)
+```
+
+```{r}
+library('tilemakr')
+```
+
 We begin my loading the layout from the package. As you can see, it's already in matrix format. Additionally, we've loaded another data set featuring variables that will enrich our visualization:
 
 ```{r}
